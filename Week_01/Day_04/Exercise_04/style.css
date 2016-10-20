@@ -1,0 +1,26 @@
+h1 {
+  color: #008000;
+  font-size: 32px;
+  font-family: Times;
+  margin-left: 40px;
+}
+
+h2 {
+  color: #008000;
+  font-size: 24px;
+  font-family: Times;
+  margin-left: 40px;
+}
+
+p {
+  margin-left: 40px;
+}
+
+span {
+  color: #FF0000;
+}
+
+#set {
+  color: blue;
+  font-style: italic;
+}
