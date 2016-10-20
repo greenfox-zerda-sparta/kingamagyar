@@ -1,0 +1,19 @@
+h1 {
+  color: #0000FF;
+  font-size: 32px;
+  font-family: Times;
+}
+
+h2 {
+  color: #FFA500;
+  font-size: 24px;
+  font-family: Times;
+}
+
+.red {
+  color: #FF0000;
+}
+
+.blue {
+  color: #0000FF;
+}
