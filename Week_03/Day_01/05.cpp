@@ -1,3 +1,11 @@
+//============================================================================
+// Name        : 05.cpp
+// Author      : 
+// Version     :
+// Copyright   : Your copyright notice
+// Description : Hello World in C++, Ansi-style
+//============================================================================
+
 #include <iostream>
 
 using namespace std;
@@ -8,27 +16,30 @@ using namespace std;
  * It should copy all the elements to the new array, if the array is bigger it should fill all the new slots with zeros.
  * It should delete the old array.
  */
-
-int* resize(int* array, int size, int new_size) {
-  int* new_pointer = new int[new_size];
-  for (int i = 0; i < new_size; i++) {
-    new_pointer[i] = array[i];
-    if (i >= size) {
-      new_pointer[i] = 0;
-    }
-  }
-  return new_pointer;
-}
+int* resize(int * old, int length, int new_length);
 
 int main() {
-  int array[5] = {1, 2, 3, 4, 5};
-  int* new_array = resize(array, 5, 8);
+  int* array = new int[5];
+  for (int i = 0; i < 5; ++i) {
+    array[i] = i + 1;
+  }
 
-  for (int i = 0; i < 8; i++) {
+  int* new_array = resize(array, 5, 7);
+
+  for (int i = 0; i < 7; ++i) {
     cout << new_array[i] << endl;
   }
 
   delete[] new_array;
-  new_array = nullptr;
+
   return 0;
+}
+
+int* resize(int* old, int length, int new_length) {
+  int* new_arr = new int[new_length];
+  for (int i = 0; i < new_length; i++) {
+    new_arr[i] = (i < length ? old[i] : 0);
+  }
+  delete[] old;
+  return new_arr;
 }
