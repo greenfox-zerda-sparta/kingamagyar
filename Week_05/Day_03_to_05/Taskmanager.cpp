@@ -91,9 +91,11 @@ void Taskmanager::remove_task(char* idx) {
     tasks = temp;
     task_counter--;
     save_task();
+    std::cout << "\nYour list looks like this now: " << std::endl;
     for(int i = 0; i < task_counter; ++i) {
-      std::cout << tasks[i]->get_task();
+      std::cout << " - " << tasks[i]->get_task() << std::endl;
     }
+    std::cout << std::endl;
   } else {
     std::cout << "Maaan, no task index was provided, so I cannot remove it!\n" << std::endl;
   }

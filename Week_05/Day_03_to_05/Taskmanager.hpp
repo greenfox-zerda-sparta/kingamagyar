@@ -21,9 +21,7 @@ class Taskmanager {
     void set_array();
     void print_usage_info();
     void list_contents();
-    //void set_task(char* new_content);
     void add_new_task(char* new_content);
-   // void remove_task(char* idx);
     void remove_task(char* idx);
     void save_task();
     void missing_file();
