@@ -17,13 +17,15 @@ class Taskmanager {
     std::string file_name;
   public:
     Taskmanager();
-    void set_task(std::string tasks);
-    void count_tasks(std::string file_name);
+    void count_tasks();
+    void set_array();
     void print_usage_info();
-    bool is_file_open();
     void list_contents();
-    void add_new_task(char* command);
-    void remove_task(char* command);
+    //void set_task(char* new_content);
+    void add_new_task(char* new_content);
+   // void remove_task(char* idx);
+    void remove_task(char* idx);
+    void save_task();
     void missing_file();
     virtual ~Taskmanager();
 };

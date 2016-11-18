@@ -17,12 +17,10 @@
 
 class Task {
   private:
-    std::string file_name;
     std::string task;
   public:
     Task(std::string task);
     std::string get_task();
-    std::string get_file_name();
     virtual ~Task();
 };
 

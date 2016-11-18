@@ -8,96 +8,104 @@
 #include "Taskmanager.hpp"
 
 Taskmanager::Taskmanager() {
-  tasks = 0;
+  this->tasks = 0;
+  this->task_counter = 0;
+  this->line = "";
+  this->file_name = "todo.txt";
+
+  count_tasks();
+  tasks = new Task*[task_counter];
+  set_array();
+}
+
+void Taskmanager::count_tasks() {
+  std::ifstream myfile;
   task_counter = 0;
-  this->line = line;
-  file_name = "todo.txt";
-}
-
-void Taskmanager::set_task(std::string task) {
-  Task* new_task = new Task(task);
-  Task** temp = new Task*[task_counter + 1];
-  for (int i = 0; i < task_counter; ++i) {
-    temp[i] = tasks[i];
+  myfile.open(file_name);
+  while (getline(myfile, line)) {
+    task_counter++;
   }
-  temp[task_counter] = new_task;
-  delete[] tasks;
-  tasks = temp;
-  task_counter++;
+  myfile.close();
 }
 
-void Taskmanager::count_tasks(std::string file_name) {
-    std::ifstream myfile;
-    myfile.open(file_name);
-    while (getline(myfile, line)) {
-      task_counter++;
+void Taskmanager::set_array() {
+  std::ifstream myfile(file_name);
+  if (myfile.is_open()) {
+    for (int i = 0; i < task_counter; ++i) {
+      getline(myfile, line);
+      tasks[i] = new Task(line);
     }
-    //std::cout << "\nYou have " << task_counter << " tasks on your list." << std::endl;
-    myfile.close();
+  myfile.close();
+  } else {
+    missing_file();
+  }
 }
 
 void Taskmanager::print_usage_info() {
   std::ifstream clfile;
   clfile.open("CL_Arguments.txt");
   while (getline(clfile, line)) {
-    clfile >> line;
+    std::cout << line << std::endl;
   }
   clfile.close();
 }
 
-bool Taskmanager::is_file_open() {
-  std::ifstream myfile(file_name);
-  return myfile.is_open();
-}
-
 void Taskmanager::list_contents() {
-  std::ifstream myfile;
-  myfile.open(file_name);
-  if(myfile.peek() != std::ifstream::traits_type::eof()) {
-    while(getline(myfile, line)) {
-      task_counter++;
-      std::cout << task_counter << " - [ " << " ] " << line << std::endl;
+  if (task_counter != 0) {
+    for (int i = 0; i < task_counter; ++i) {
+      std::cout << (i + 1) << " - [ " << " ] " << tasks[i]->get_task() << std::endl;
     }
-    myfile.close();
-  } else if (myfile.peek() == std::ifstream::traits_type::eof()) {
+  } else {
     std::cout << "You're free, enjoy life, no tasks!!!\n" << std::endl;
   }
 }
 
-void Taskmanager::add_new_task(char* command) {
-  if (command != NULL) {
-    std::ofstream myfile;
-    myfile.open(file_name, std::ios::app);
-    myfile << command << "\n";
-    myfile.close();
+void Taskmanager::add_new_task(char* new_content) {
+  Task* new_task = new Task(new_content);
+  Task** temp = new Task*[task_counter + 1];
+  if (new_content != NULL) {
+    for (int i = 0; i < task_counter; ++i) {
+      temp[i] = tasks[i];
+    }
   } else {
     std::cout << "Yo, no task was provided, so I cannot add it, dah!\n" << std::endl;
   }
+  temp[task_counter] = new_task;
+  delete[] tasks;
+  tasks = temp;
+  task_counter++;
+  std::cout << "Yippi, we added a new task: " << new_content << std::endl;
 }
 
-void Taskmanager::remove_task(char* command) {
-  if (command != NULL) {
-    int line_input = atoi(command);
-    int count = 0;
-    std::ifstream myfile;
-    myfile.open(file_name);
-    std::ofstream temp;
-    temp.open("temp.txt");
-    while (getline(myfile, line)) {
-      count++;
-      if (line_input == count) {
-        std::cout << "Yay, you've removed " << line << " from your todo!\n" << std::endl;
-      } else {
-        temp << line << std::endl;
-      }
+void Taskmanager::remove_task(char* idx) {
+  if (idx != NULL) {
+    int line_input = atoi(idx);
+    Task** temp = new Task* [task_counter];
+    for (int i = 0; i < line_input-1; ++i) {
+      temp [i] = tasks [i];
     }
-    myfile.close();
-    temp.close();
-    remove("todo.txt");
-    rename("temp.txt", "todo.txt");
+    for (int i = line_input; i < task_counter; ++i) {
+      temp[i-1] = tasks[i];
+    }
+    delete[] tasks;
+    tasks = temp;
+    task_counter--;
+    save_task();
+    for(int i = 0; i < task_counter; ++i) {
+      std::cout << tasks[i]->get_task();
+    }
   } else {
     std::cout << "Maaan, no task index was provided, so I cannot remove it!\n" << std::endl;
   }
+}
+
+void Taskmanager::save_task() {
+  std::ofstream myfile;
+  myfile.open(file_name);
+  for (int i = 0; i < task_counter; ++i) {
+    myfile << tasks[i]->get_task() << "\n";
+  }
+  myfile.close();
 }
 
 void Taskmanager::missing_file() {
@@ -106,6 +114,7 @@ void Taskmanager::missing_file() {
 }
 
 Taskmanager::~Taskmanager() {
-
+  save_task();
+  delete[] tasks;
 }
 
