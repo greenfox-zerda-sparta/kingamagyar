@@ -17,11 +17,16 @@ void fillVector(vector< vector<int> >& vec) {
 }
 
 void extendVector (vector< vector<int> >& vec) {
+  vec.insert(vec.begin(), vector<int>(4, 1));
   for (unsigned i = 0; i < vec.size(); i++) {
+    vec[i].pop_back();
+    vec[i].push_back(1);
+    vec[i].insert(vec[i].begin(), 0);
     for (unsigned j = 0; j < vec[i].size(); j++) {
-      if (i == 0) {
-        vec[i][j] = 1;
-      } else if (i == j && i != 0) {
+      if (j == 0) {
+        vec[i][j] = 0;
+      }
+      if (i == 0 && j == 0) {
         vec[i][j] = 1;
       }
       cout << vec[i][j] << ' ';
