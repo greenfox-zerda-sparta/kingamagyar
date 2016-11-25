@@ -23,9 +23,6 @@ void extendVector (vector< vector<int> >& vec) {
     vec[i].push_back(1);
     vec[i].insert(vec[i].begin(), 0);
     for (unsigned j = 0; j < vec[i].size(); j++) {
-      if (j == 0) {
-        vec[i][j] = 0;
-      }
       if (i == 0 && j == 0) {
         vec[i][j] = 1;
       }
