@@ -1,15 +1,15 @@
-//
-//  main.cpp
-//  08
-//
-//  Created by Magyar Kinga on 12/12/16.
-//  Copyright © 2016 Kinga Magyar. All rights reserved.
-//
+// Create a function like macro, that gets an expression as it's input.
+// If the expression is false, it should print out some error message.
 
 #include <iostream>
 
-int main(int argc, const char * argv[]) {
-  // insert code here...
-  std::cout << "Hello, World!\n";
-    return 0;
+#define EXPRESSION(x) (!(x)) ? (printf("ERROR: The expression is false!!")) : (printf("It's true!"))
+
+int main() {
+  int a = 2;
+  int b = 8;
+  EXPRESSION(a > b);
+  std::cout << std::endl;
+  EXPRESSION(a < b);
+  return 0;
 }
