@@ -9,11 +9,13 @@
 #ifdef SHORT_LIST
 #define LIST_LENGTH 20
 #else
+#define LIST_LENGTH 800
+#endif
 
 #include <iostream>
 using namespace std;
 
 int main() {
-  
-    return 0;
+  cout << LIST_LENGTH << endl;
+  return 0;
 }
