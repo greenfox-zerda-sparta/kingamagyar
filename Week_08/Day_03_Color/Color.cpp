@@ -1,9 +1,6 @@
 #include "Color.hpp"
 
-Color::Color() {
-  red = '0';
-  green = '0';
-  blue = '0';
+Color::Color() : red(0), green(0), blue(0) {
 }
 
 Color::Color(unsigned char r, unsigned char g, unsigned char b) {
@@ -13,7 +10,7 @@ Color::Color(unsigned char r, unsigned char g, unsigned char b) {
 }
 
 Color::Color(std::string hex) {
-  
+  //if ( letter == 97 || letter == 65 )
 }
 
 Color::Color(const Color& other) {
@@ -34,6 +31,10 @@ unsigned char Color::get_blue() const {
   return blue;
 }
 
+std::string Color::get_rgb() {
+  return "RGB(" + to_string((int)red) + ", " + to_string((int)green) + ", " + to_string((int)blue) + ")";
+}
+
 void Color::set_red(unsigned char r) {
   red = r;
 }
@@ -48,6 +49,9 @@ void Color::set_blue(unsigned char b) {
 
 Color Color::blend(const Color& other) {
   Color temp;
+  temp.red = (red + other.red) / 2;
+  temp.green = (green + other.green) / 2;
+  temp.blue = (blue + other.blue) / 2;
   return temp;
 }
 

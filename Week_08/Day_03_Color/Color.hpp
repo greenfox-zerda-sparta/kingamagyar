@@ -1,6 +1,7 @@
 #ifndef Color_hpp
 #define Color_hpp
 
+#include "Util.hpp"
 #include <iostream>
 #include <string>
 
@@ -17,6 +18,7 @@ public:
   unsigned char get_red() const;
   unsigned char get_green() const;
   unsigned char get_blue() const;
+  std::string get_rgb();
   void set_red(unsigned char r);
   void set_green(unsigned char g);
   void set_blue(unsigned char b);
