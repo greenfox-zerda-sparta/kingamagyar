@@ -15,18 +15,27 @@ using namespace std;
 // Ron - Cloe
 // Mike - Joe
 
-void print_pairs(vector<string>& vec1, vector<string>& vec2) {
-  random_shuffle(vec1.begin(), vec1.end());
+void create_pairs(vector<string>& vec1, vector<string>& vec2) {
+  for (unsigned int i = 0; i < vec1.size(); i++) {
+    cout << vec1[i] << " - " << vec2[i] << endl;
+  }
+}
+
+bool is_correct_pair(vector<string>& vec1, vector<string>& vec2) {
   random_shuffle(vec2.begin(), vec2.end());
   for (unsigned int i = 0; i < vec1.size(); i++) {
-    for (unsigned int j = i; j < i+1; j++) {
-      if(vec1[i] == vec2[j]) {
-        random_shuffle(vec2.begin(), vec2.end());
-      } else {
-      cout << vec1[i] << " - " << vec2[j] << endl;
-      }
+    if (vec1[i] == vec2[i]) {
+      return false;
     }
   }
+  return true;
+}
+
+void vector_shuffle(vector<string>& vec1, vector<string>& vec2) {
+  while (!is_correct_pair(vec1, vec2)) {
+    random_shuffle(vec2.begin(), vec2.end());
+  }
+  create_pairs(vec1, vec2);
 }
 
 void secret_santa() {
@@ -42,7 +51,7 @@ void secret_santa() {
     names2.push_back(input);
     cout << "Input the next name or press 'q' if you're done: " << endl;
   }
-  print_pairs(names, names2);
+  vector_shuffle(names, names2);
 }
 
 int main() {
